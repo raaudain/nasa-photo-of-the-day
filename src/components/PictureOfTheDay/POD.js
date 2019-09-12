@@ -1,45 +1,31 @@
 import React, {useState, useEffect} from "react";
 import PODCard from "./PODCard";
 import axios from "axios";
+import {Container, Row} from "reactstrap"
 
 
 export default function POD(){
     
-    const [date, setDate] = useState("");
-    const [title, setTitle] = useState("");
-    const [img, setImg] = useState("");
-    const [desc, setDesc] = useState("");
-    const [copyright, setCopyright] = useState("");
+    const [pod, setPod] = useState([]);
 
-    
 
     useEffect(()=> {
 
-
+        // Gets API
         axios
-            .get(`https://api.nasa.gov/planetary/apod?api_key=OtzHcO999QiozRF5WdhggeWhhMjwAXr3Whff1daa`)
+            .get(`https://api.nasa.gov/planetary/apod?api_key=OtzHcO999QiozRF5WdhggeWhhMjwAXr3Whff1daa&count=9`)
             .then(response =>{
 
+                // Sets the array of objects from the API
                 console.log(response.data)
-            
+                const apod = response.data
+                setPod(apod);
 
-                Object.values(response.data).forEach((key)=>{
-                    
-                    setDate(key.date);
-                    setTitle(key.title);
-                    setImg(key.hdurl);
-                    setDesc(key.explanation);
-                    setCopyright(key.copyright)
-                })
-
-               
-
-                console.log(response.data);
-                setDate(response.data.date);
-                setTitle(response.data.title);
-                setImg(response.data.hdurl);
-                setDesc(response.data.explanation);
-                setCopyright(response.data.copyright)
+                // Object.values(response.data).forEach((key)=>{
+                //     //console.log(key);
+                //     const apod = key;
+                //     setPod(apod)
+                // })
             })
 
             .catch(error =>{
@@ -47,22 +33,22 @@ export default function POD(){
             })
     },[])
   
+
     
     return(
-        <div className="pic">
+        <Container>
             
-           
-            <PODCard 
+            <h1>Random Pictures for NASA</h1>
+            <br/>
+            <Row>
             
-            key={date}
-            title={title}
-            hdurl={img}
-            copyright={copyright}
-            date={date}
-            explanation={desc}
-            
-            />
+            {/* Loops through the array of objects */}
+            {pod.map((item) => { 
+                console.log(item);
+                return <PODCard  key={item.date} title={item.title}hdurl={item.hdurl} url={item.url} copyright={item.copyright} date={item.date} explanation={item.explanation} />})}
 
-        </div>
+            </Row>
+
+        </Container>
     )
 }
