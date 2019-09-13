@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  width: 100%;
+  margin: auto;
+  background-image: url("https://source.unsplash.com/featured/?space");
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  
 }
 
 .App-logo {
@@ -31,3 +39,16 @@
     transform: rotate(360deg);
   }
 }
+
+.h1, h1{
+  padding-top: 2rem;
+  font-family: 'Ubuntu', sans-serif;
+  color: white;
+  font-size: 4rem;
+}
+
+.card-body{
+  height: 1500px;
+  border: solid goldenrod 4px;
+}
+
